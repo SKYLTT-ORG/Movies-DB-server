@@ -6,7 +6,7 @@ export const fetchFromCache = async (key) => {
 };
 
 export const storeInCache = async (key, data, cacheDuration) => {
-  await redisClient.setex(key, cacheDuration, JSON.stringify(data));
+  await redisClient.set(key, cacheDuration, JSON.stringify(data));
   return;
 };
 

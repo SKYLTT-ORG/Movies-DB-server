@@ -14,7 +14,7 @@ import {
 
 const REDIS_KEY = "participants";
 const REDIS_CACHE = 3600;
-
+ 
 export const getParticipants = async (req, res) => {
   const resultFromCache = await fetchFromCache(REDIS_KEY);
   if (resultFromCache) {
@@ -45,7 +45,7 @@ export const getParticipant = async (req, res) => {
 
 export const createParticipant = async (req, res) => {
   const { name, age, role } = req.body;
-
+  await invalidateCache(REDIS_KEY);
   const result = await createParticipantByName(name, age, role);
   res.status(201).json(result);
 };
