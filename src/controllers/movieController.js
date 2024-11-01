@@ -4,7 +4,7 @@ import {
   movieDetails,
   moviesList,
   updateMovieById,
-} from "../services/movieService";
+} from "../services/movieService.js";
 
 export const getMovieList = async (req, res) => {
   try {
@@ -50,9 +50,9 @@ export const updateMovie = async (req, res) => {
   }
 };
 
-export const deleteMovie = async (movieId) => {
+export const deleteMovie = async (req, res) => {
   try {
-    const movieId = req.params ?? "";
+    const movieId = req.params.movieId ?? "";
 
     const result = await deleteMovieById(movieId);
 

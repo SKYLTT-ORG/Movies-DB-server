@@ -15,3 +15,7 @@ export const MOVIES_GENRE = [
   "Romantic",
   "Thriller",
 ];
+
+export const USER_ROLE = ["Guest", "Moderator", "Admin"];
+
+export const DEFAULT_USER_ROLE = USER_ROLE[0];

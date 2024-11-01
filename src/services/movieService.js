@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Movie from "../repositories/schemas/movieSchema";
+import Movie from "../repositories/schemas/movieSchema.js";
 
 export const moviesList = async () => {
   const result = await Movie.find()
@@ -50,7 +50,7 @@ export const updateMovieById = async (movieId, movieObj) => {
 };
 
 export const createMovieByName = async(movieObj) =>{
-    const newMovie = new Movie.findById(movieObj);
+    const newMovie = new Movie(movieObj);
     await newMovie.save();
     return newMovie;
 };

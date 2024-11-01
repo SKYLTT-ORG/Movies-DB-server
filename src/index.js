@@ -4,8 +4,9 @@ import { DB_NAME } from "./constant.js";
 import connect from "./config/db.js";
 
 // routes list start
-import Participants from "./routes/participantRoutes.js";
+import participants from "./routes/participantRoutes.js";
 import movie from "./routes/moviesRoutes.js";
+import user from "./routes/userRoutes.js"
 // routes end
 
 
@@ -22,8 +23,9 @@ app.get("/",(req,res)=>{
 })
 
 // middle for routes
-app.use('/participants', Participants)
+app.use('/participants', participants)
 app.use('/movie', movie)
+app.use('/auth', user)
 
 await connect(DB_NAME);
 

@@ -1,5 +1,5 @@
-import mongoose, { Mongoose } from "mongoose";
-import { MOVIES_GENRE } from "../../constant";
+import mongoose from "mongoose";
+import { MOVIES_GENRE } from "../../constant.js";
 
 const moviesSchema = new mongoose.Schema({
     movieName: {
