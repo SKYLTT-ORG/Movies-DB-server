@@ -26,7 +26,7 @@ export const getParticipants = async (req, res) => {
   res.status(200).json(result);
 };
 
-export const getParticipant = async (req, res) => {
+export const getParticipantDetails = async (req, res) => {
   const id = req?.params?.id ?? "";
   const resultFromCache = await fetchFromCache(REDIS_KEY);
   if (resultFromCache) {
@@ -44,19 +44,21 @@ export const getParticipant = async (req, res) => {
 };
 
 export const createParticipant = async (req, res) => {
+  const logId = req?.logId;
   const { name, age, role } = req.body;
 
-  const result = await createParticipantByName(name, age, role);
-  res.status(201).json(result);
+  const result = await createParticipantByName(name, age, role, logId);
+  await invalidateCache(REDIS_KEY, logId);
+  res.status(201).json({ result, logId });
 };
 
 export const updateParticipant = async (req, res) => {
   const id = req?.params?.id ?? "";
-
+  const logId = req?.logId;
   const { name, age, role } = req.body;
 
-  const result = await updateParticipantById(id, name, age, role);
-  await invalidateCache(REDIS_KEY);
+  const result = await updateParticipantById(id, name, age, role, logId);
+  await invalidateCache(REDIS_KEY, logId);
   if (!result) {
     res.status(404).json({ message: "Participant not found" });
     return;

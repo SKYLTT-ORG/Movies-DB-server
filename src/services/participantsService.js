@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Participants from "../repositories/schemas/participantsSchema.js";
+import { logMgs } from "../lib/logProducer.js";
 
 export const getAllParticipants = async () => {
   const result = await Participants.find();
@@ -17,17 +18,20 @@ export const getSingleParticipantById = async(id)=>{
   if(!result){
     return null
   }
-  return participant
+  return result
 }
 
 
-export const createParticipantByName = async( name, age, role) =>{
+export const createParticipantByName = async( name, age, role, logId) =>{
+  logMgs(logId, "creating participant in the repository", {name, age, role} )
     const newParticipant = new Participants({name, age, role});
     const result = await newParticipant.save();
+    logMgs(logId, "successfully participant in the repository", result)
     return result;
 }
 
-export const updateParticipantById = async(id, name, age, role) =>{
+export const updateParticipantById = async(id, name, age, role, logId) =>{
+  logMgs(logId, "updating participant in the repository", {name, age, role} )
   if(!mongoose.Types.ObjectId.isValid(id)){
     return null
   }
@@ -36,16 +40,18 @@ export const updateParticipantById = async(id, name, age, role) =>{
   if(!result){
     return []
   }
+  logMgs(logId, "updating participant in the repository", result)
+
   return result
 
 }
 
 
-export const deleteParticipantById = async(id) =>{
+export const deleteParticipantById = async(id, logId) =>{
   if(!mongoose.Types.ObjectId.isValid(id)){
     return null
   }
-  const result = await participant.findByIdAndDelete(id);
+  const result = await Participants.findByIdAndDelete(id);
   if(!result){
     return false
   }

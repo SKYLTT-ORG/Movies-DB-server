@@ -1,4 +1,5 @@
 import redisClient from "../config/redis.js";
+import { logMgs } from "./logProducer.js";
 
 export const fetchFromCache = async (key) => {
   const cachedData = await redisClient.get(key);
@@ -6,10 +7,11 @@ export const fetchFromCache = async (key) => {
 };
 
 export const storeInCache = async (key, data, cacheDuration) => {
-  await redisClient.setex(key, cacheDuration, JSON.stringify(data));
+  await redisClient.set(key, cacheDuration, JSON.stringify(data));
   return;
 };
 
-export const invalidateCache = async (key) => {
+export const invalidateCache = async (key, logId) => {
+  logMgs(logId, `invalidating redis key: ${key}`, {})
   await redisClient.del(key);
 };

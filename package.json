@@ -6,16 +6,22 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./src/index.js"
+    "start": "nodemon ./src/index.js",
+    "log": "nodemon src/logService/index.js"
   },
   "author": "Lalit Aswal",
   "license": "ISC",
   "dependencies": {
+    "amqplib": "^0.10.4",
     "bcrypt": "^5.1.1",
     "express": "^4.21.0",
+    "express-rate-limit": "^7.4.1",
+    "express-validator": "^7.2.0",
     "ioredis": "^5.4.1",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.7.0"
+    "mongoose": "^8.7.0",
+    "node-cron": "^3.0.3",
+    "tiny-uid": "^1.1.2"
   },
   "devDependencies": {
     "dotenv": "^16.4.5",
